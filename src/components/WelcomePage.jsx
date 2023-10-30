@@ -64,7 +64,7 @@ const WelcomePage = () => {
               borderRadius: "5px",
             }}
           >
-            Отправить
+            Send
           </button>
         </Form>
       </Formik>
