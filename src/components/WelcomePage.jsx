@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import classes from "./WelcomePage.module.css";
 
 const validationSchema = Yup.object().shape({
   inputValue: Yup.string().required("Поле обязательно для заполнения"),
@@ -17,54 +18,24 @@ const WelcomePage = () => {
   };
 
   return (
-    <div
-      style={{
-        background: "purple",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className={classes.wraper}>
+      <span style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}>
+        Введите пароль:
+      </span>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Field
-            type="text"
-            name="inputValue"
-            placeholder="Введите что-нибудь"
-            style={{
-              padding: "10px",
-              borderRadius: "5px",
-              width: "100%",
-            }}
-          />
+        <Form className={classes.form}>
+          <Field type="text" name="inputValue" className={classes.field} />
           <ErrorMessage
             name="inputValue"
             component="div"
             style={{ color: "white" }}
           />
-          <button
-            type="submit"
-            style={{
-              marginTop: "10px",
-              padding: "10px 20px",
-              background: "white",
-              color: "purple",
-              border: "none",
-              borderRadius: "5px",
-            }}
-          >
-            Send
+          <button type="submit" className={classes.button}>
+            OK
           </button>
         </Form>
       </Formik>
