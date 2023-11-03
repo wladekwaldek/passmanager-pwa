@@ -1,0 +1,30 @@
+.form {
+  display: flex;
+  height: 10%;
+  width: 100%;
+  background-color: black;
+  position: fixed;
+  top: 20%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.button {
+  border: none;
+  border-radius: 5px;
+  font-size: 1.3em;
+  padding: 15px;
+}
+.field {
+  border: 2px solid white; /* Создаем черную полоску снизу */
+  background-color: inherit;
+  color: white;
+  height: 55%;
+  width: 60%;
+  font-size: 1.3em;
+  outline: none;
+  padding: 5px;
+}
+
+.wraper {
+}

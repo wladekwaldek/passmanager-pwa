@@ -18,7 +18,7 @@ const WelcomePage = () => {
   };
 
   return (
-    <div className={classes.wraper}>
+    <>
       <span style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}>
         Введите пароль:
       </span>
@@ -39,7 +39,7 @@ const WelcomePage = () => {
           </button>
         </Form>
       </Formik>
-    </div>
+    </>
   );
 };
 
