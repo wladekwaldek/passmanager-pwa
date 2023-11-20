@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import classes from "./components/WelcomePage.module.css";
+import "./App.css";
 
 function App() {
   return (
-    <div className={classes.wraper}>
+    <div className="wraper">
       <nav
         style={{
           position: "fixed",
@@ -18,6 +18,7 @@ function App() {
         <NavLink to="/">WP</NavLink>
         <NavLink to="/list">main</NavLink>
         <NavLink to="/list/form">form</NavLink>
+        <NavLink to="/list/reg">reg</NavLink>
       </nav>
       <Navigation />
     </div>

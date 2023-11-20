@@ -4,7 +4,7 @@
   width: 100%;
   background-color: black;
   position: fixed;
-  top: 20%;
+  top: 10%;
   justify-content: space-around;
   align-items: center;
 }
@@ -14,7 +14,10 @@
   border-radius: 5px;
   font-size: 1.3em;
   padding: 15px;
+  color: white;
+  background-color: inherit;
 }
+
 .field {
   border: 2px solid white; /* Создаем черную полоску снизу */
   background-color: inherit;
