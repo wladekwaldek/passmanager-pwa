@@ -12,12 +12,17 @@ const validationSchema = Yup.object().shape({
 const WelcomePage = () => {
   const [first_name, setFirst_name] = useState("");
   const [user_id, setUser_id] = useState("");
+  const [user_from_storage, setUser_from_storage] = useState(
+    localStorage.getItem(user_id)
+  );
   const initialValues = {
     inputValue: "",
   };
 
   const handleSubmit = (values) => {
     localStorage.setItem(user_id, values.inputValue);
+    const id = localStorage.getItem(user_id);
+    setUser_from_storage(id);
   };
 
   const handleButton = () => {
@@ -52,7 +57,7 @@ const WelcomePage = () => {
   } else {
     return (
       <>
-        {localStorage.getItem("id") ? (
+        {user_from_storage ? (
           <span
             style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}
           >
@@ -68,7 +73,7 @@ const WelcomePage = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={user_from_storage ? handleSubmit : handleButton}
         >
           <Form className={classes.form}>
             <Field type="text" name="inputValue" className={classes.field} />
