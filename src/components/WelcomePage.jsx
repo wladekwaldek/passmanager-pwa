@@ -17,12 +17,12 @@ const WelcomePage = () => {
   };
 
   const handleSubmit = (values) => {
-    localStorage.setItem(user_id, values);
+    localStorage.setItem(user_id, values.inputValue);
   };
 
   const handleButton = () => {
     const id = localStorage.getItem(user_id);
-    alert(id.inputValue);
+    alert(id);
   };
 
   useEffect(() => {
