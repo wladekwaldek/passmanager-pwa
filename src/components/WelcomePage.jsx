@@ -73,7 +73,7 @@ const WelcomePage = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={user_from_storage ? handleSubmit : handleButton}
+          onSubmit={user_from_storage ? handleButton : handleSubmit}
         >
           <Form className={classes.form}>
             <Field type="text" name="inputValue" className={classes.field} />
