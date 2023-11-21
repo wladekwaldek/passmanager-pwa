@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import classes from "./WelcomePage.module.css";
 
@@ -11,22 +10,30 @@ const validationSchema = Yup.object().shape({
 });
 
 const WelcomePage = () => {
-  const [telegram_id, setTelegram_id] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [user_id, setUser_id] = useState("");
   const initialValues = {
     inputValue: "",
   };
 
   const handleSubmit = (values) => {
-    // Здесь вы можете выполнить логику обработки отправки формы
-    alert(telegram_id);
+    localStorage.setItem(user_id, values);
+  };
+
+  const handleButton = () => {
+    const id = localStorage.getItem(user_id);
+    alert(id.inputValue);
   };
 
   useEffect(() => {
     webApp.ready();
-    if (webApp.initData) setTelegram_id(webApp.initDataUnsafe.user.first_name);
-  }, []);
+    if (webApp.initData) {
+      setFirst_name(webApp.initDataUnsafe?.user?.first_name);
+      setUser_id(webApp.initDataUnsafe?.user?.id.toString());
+    }
+  }, [user_id]);
 
-  if (!telegram_id) {
+  if (!webApp.initData) {
     return (
       <div>
         <span
@@ -39,15 +46,25 @@ const WelcomePage = () => {
         >
           Войдите через
         </span>
-        <a href="https://t.me/passwordsMaker_bot">телеграм-бот</a>
+        <a href="https://t.me/passwordsMaker_bot"> телеграм-бот</a>
       </div>
     );
   } else {
     return (
       <>
-        <span style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}>
-          Введите пароль:
-        </span>
+        {localStorage.getItem("id") ? (
+          <span
+            style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}
+          >
+            Введите пароль:
+          </span>
+        ) : (
+          <span
+            style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}
+          >
+            Придумайте пароль:
+          </span>
+        )}
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -65,6 +82,17 @@ const WelcomePage = () => {
             </button>
           </Form>
         </Formik>
+        <button className={classes.button} onClick={handleButton}>
+          alert
+        </button>
+        <button
+          className={classes.button}
+          onClick={() => {
+            localStorage.clear();
+          }}
+        >
+          clear
+        </button>
       </>
     );
   }
