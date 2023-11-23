@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import classes from "./WelcomePage.module.css";
 
@@ -12,22 +13,25 @@ const validationSchema = Yup.object().shape({
 const WelcomePage = () => {
   const [first_name, setFirst_name] = useState("");
   const [user_id, setUser_id] = useState("");
-  const [user_from_storage, setUser_from_storage] = useState(
-    localStorage.getItem(user_id)
-  );
+  const [user_from_storage, setUser_from_storage] = useState("");
+  const navigate = useNavigate();
   const initialValues = {
     inputValue: "",
   };
 
-  const handleSubmit = (values) => {
+  const firstReg = (values) => {
     localStorage.setItem(user_id, values.inputValue);
     const id = localStorage.getItem(user_id);
     setUser_from_storage(id);
   };
 
-  const handleButton = () => {
+  const logIn = (values) => {
     const id = localStorage.getItem(user_id);
-    alert(id);
+    if (id === values.inputValue) {
+      navigate("/list");
+    } else {
+      alert("error");
+    }
   };
 
   useEffect(() => {
@@ -35,6 +39,7 @@ const WelcomePage = () => {
     if (webApp.initData) {
       setFirst_name(webApp.initDataUnsafe?.user?.first_name);
       setUser_id(webApp.initDataUnsafe?.user?.id.toString());
+      setUser_from_storage(localStorage.getItem(user_id));
     }
   }, [user_id]);
 
@@ -57,6 +62,9 @@ const WelcomePage = () => {
   } else {
     return (
       <>
+        <span style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}>
+          Привет {first_name}
+        </span>
         {user_from_storage ? (
           <span
             style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}
@@ -73,7 +81,7 @@ const WelcomePage = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={user_from_storage ? handleButton : handleSubmit}
+          onSubmit={user_from_storage ? logIn : firstReg}
         >
           <Form className={classes.form}>
             <Field type="text" name="inputValue" className={classes.field} />
@@ -87,9 +95,7 @@ const WelcomePage = () => {
             </button>
           </Form>
         </Formik>
-        <button className={classes.button} onClick={handleButton}>
-          alert
-        </button>
+
         <button
           className={classes.button}
           onClick={() => {
