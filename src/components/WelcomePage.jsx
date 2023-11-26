@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import classes from "./WelcomePage.module.css";
+import { AuthContext } from "../context/AuthContext";
 
 const webApp = window.Telegram.WebApp;
 
@@ -14,7 +14,7 @@ const WelcomePage = () => {
   const [first_name, setFirst_name] = useState("");
   const [user_id, setUser_id] = useState("");
   const [user_from_storage, setUser_from_storage] = useState("");
-  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
   const initialValues = {
     inputValue: "",
   };
@@ -26,12 +26,7 @@ const WelcomePage = () => {
   };
 
   const logIn = (values) => {
-    const id = localStorage.getItem(user_id);
-    if (id === values.inputValue) {
-      navigate("/list");
-    } else {
-      alert("error");
-    }
+    auth.login(values, user_id);
   };
 
   useEffect(() => {

@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
+import { useAuth } from "./hooks/auth";
 import Navigation from "./components/Navigation";
 import "./App.css";
 
 function App() {
+  const { isAuthenticated, login } = useAuth();
   return (
     <div className="wraper">
       <nav
@@ -20,7 +23,9 @@ function App() {
         <NavLink to="/list/form">form</NavLink>
         <NavLink to="/list/reg">reg</NavLink>
       </nav>
-      <Navigation />
+      <AuthContext.Provider value={{ isAuthenticated, login }}>
+        <Navigation />
+      </AuthContext.Provider>
     </div>
   );
 }
