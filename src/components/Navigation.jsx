@@ -5,6 +5,7 @@ import Search from "./Search";
 import RegistrationForm from "./RegistrationForm";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import List from "./List";
 
 export default function Navigation() {
   const auth = useContext(AuthContext);
@@ -14,8 +15,7 @@ export default function Navigation() {
         path="/"
         element={auth.isAuthenticated ? <MainPage /> : <WelcomePage />}
       />
-      <Route path="/list/form" element={<Search />} />
-      <Route path="/list/reg" element={<RegistrationForm />} />
+      <Route path="/list" element={<List />} />
     </Routes>
   );
 }

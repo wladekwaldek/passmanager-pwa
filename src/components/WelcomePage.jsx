@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import classes from "./WelcomePage.module.css";
+import "./components.css";
 import { AuthContext } from "../context/AuthContext";
 
 const webApp = window.Telegram.WebApp;
@@ -78,21 +78,21 @@ const WelcomePage = () => {
           validationSchema={validationSchema}
           onSubmit={user_from_storage ? logIn : firstReg}
         >
-          <Form className={classes.form}>
-            <Field type="text" name="inputValue" className={classes.field} />
+          <Form className="form">
+            <Field type="text" name="inputValue" className="field" />
             <ErrorMessage
               name="inputValue"
               component="div"
               style={{ color: "white" }}
             />
-            <button type="submit" className={classes.button}>
+            <button type="submit" className="button">
               OK
             </button>
           </Form>
         </Formik>
 
         <button
-          className={classes.button}
+          className="button"
           onClick={() => {
             localStorage.clear();
           }}

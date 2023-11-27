@@ -30,3 +30,19 @@
   border-radius: 10px;
   font-size: 14px;
 }
+
+.input {
+  display: inline-block;
+  border: none; /* Убираем стандартную границу */
+  border-bottom: 2px solid black; /* Создаем черную полоску снизу */
+  width: 60px;
+  padding: 3px;
+  outline: none;
+  background-color: inherit;
+  margin: 50px 0;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+}
