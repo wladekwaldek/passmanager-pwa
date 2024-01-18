@@ -1,76 +1,105 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./components.css";
+import ListElement from "./ListElement";
 
 export default function List() {
-  const [form, setForm] = useState({});
+  const [list, setList] = useState([]);
   const [fields, setFields] = useState([]);
   const title = useLocation();
-  useEffect(() => {
-    switch (title.state.category) {
-      case "email":
-        setFields([
-          { id: "email", fieldTitle: "Электронная почта: " },
-          { id: "password", fieldTitle: "Пароль: " },
-          { id: "notes", fieldTitle: "Заметки: " },
-        ]);
-        setForm({ email: "", password: "", notes: "" });
-        break;
-      case "sites":
-        setFields([
-          { id: "link", fieldTitle: "Веб-ссылка" },
-          { id: "login", fieldTitle: "Логин" },
-          { id: "email", fieldTitle: "Электронная почта: " },
-          { id: "password", fieldTitle: "Пароль: " },
-          { id: "notes", fieldTitle: "Заметки: " },
-        ]);
-        setForm({
-          link: "",
-          login: "",
-          email: "",
-          password: "",
-          notes: "",
-        });
-        break;
-      case "networks":
-        setFields([
-          { id: "network", fieldTitle: "Название" },
-          { id: "login", fieldTitle: "Логин" },
-          { id: "email", fieldTitle: "Электронная почта: " },
-          { id: "password", fieldTitle: "Пароль: " },
-          { id: "notes", fieldTitle: "Заметки: " },
-        ]);
-        setForm({
-          network: "",
-          login: "",
-          email: "",
-          password: "",
-          notes: "",
-        });
-        break;
-      default:
-        setFields([{ id: "titleField", fieldTitle: "Введите название" }]);
-        setForm({ titleField: "" });
-    }
-  }, [title]);
+  const navigation = useNavigate();
+  const searchParams = new URLSearchParams(title?.search);
+  const query = searchParams.get("query");
 
-  const changeHandler = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value });
+  const goToForm = () => {
+    navigation("/form", { state: { category: title.state?.category } });
   };
+
+  const removeItem = (id) => {
+    const result = window.confirm("Удалить элемент из списка?");
+    if (result) {
+      localStorage.removeItem(title.state?.category);
+      const newList = list.filter((el) => el.id !== id);
+      localStorage.setItem(
+        title.state?.category,
+        JSON.stringify({ data: newList, fields })
+      );
+      setList(newList);
+    }
+  };
+
+  useEffect(() => {
+    const listFromLocal = JSON.parse(
+      localStorage.getItem(title.state?.category)
+    );
+    if (listFromLocal) {
+      setList(listFromLocal.data);
+      setFields(listFromLocal.fields);
+    }
+    if (query) {
+      const item = list.filter((i) => i.title === query);
+      setList(item);
+    }
+  }, [title.state?.category, query]);
+
   return (
     <>
-      {fields.map((field, index) => (
-        <div key={index}>
-          <label for={field.id}>{field.fieldTitle}</label>
-          <input
-            className="input"
-            name={field.id}
-            id={field.id}
-            onChange={changeHandler}
-            value={form[field.id]}
-          />
-        </div>
-      ))}
+      <button
+        style={{ position: "absolute", top: 10, left: 10 }}
+        className="button-back"
+        onClick={() => navigation("/")}
+      >
+        <i className="fa fa-arrow-left" />
+      </button>
+      <div className="list_container">
+        {list.length > 0 ? (
+          list.map((el, index) => {
+            const array = fields;
+
+            const resultObject = array.reduce((acc, item) => {
+              const key = item.fieldTitle;
+              const value = el[item.id];
+              acc[key] = value;
+              return acc;
+            }, {});
+
+            const entries = Object.entries(resultObject);
+
+            const content = entries.map(([key, value], index) => (
+              <ListElement field={key} value={value} key={index} />
+            ));
+
+            return (
+              <div key={index} className="element">
+                {content}
+                <span
+                  onClick={() => {
+                    navigation("/form", {
+                      state: { category: title.state?.category, el },
+                    });
+                  }}
+                  style={{ position: "absolute", top: "10%", right: "30px" }}
+                >
+                  <i className="fa fa-edit" />
+                </span>
+                <span
+                  onClick={() => removeItem(el.id)}
+                  style={{ position: "absolute", top: "10%", right: "10px" }}
+                >
+                  <i className="fa fa-trash" />
+                </span>
+              </div>
+            );
+          })
+        ) : (
+          <>
+            <div>Ваш список пока пуст.</div>
+          </>
+        )}
+      </div>
+      <div className="ad_button" onClick={goToForm}>
+        Добавить
+      </div>
     </>
   );
 }

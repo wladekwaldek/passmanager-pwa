@@ -8,7 +8,7 @@ export const useAuth = () => {
     if (id === values.inputValue) {
       setIsAuthenticated(true);
     } else {
-      alert("error");
+      alert("Неверные данные");
     }
   };
 

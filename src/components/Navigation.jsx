@@ -1,11 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import WelcomePage from "./WelcomePage";
 import MainPage from "./MainPage";
-import Search from "./Search";
-import RegistrationForm from "./RegistrationForm";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import List from "./List";
+import Form from "./Form";
 
 export default function Navigation() {
   const auth = useContext(AuthContext);
@@ -15,7 +14,8 @@ export default function Navigation() {
         path="/"
         element={auth.isAuthenticated ? <MainPage /> : <WelcomePage />}
       />
-      <Route path="/list" element={<List />} />
+      <Route path="/list/:param?" element={<List />} />
+      <Route path="/form" element={<Form />} />
     </Routes>
   );
 }

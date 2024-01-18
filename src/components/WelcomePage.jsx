@@ -6,10 +6,6 @@ import { AuthContext } from "../context/AuthContext";
 
 const webApp = window.Telegram.WebApp;
 
-const validationSchema = Yup.object().shape({
-  inputValue: Yup.string().required("Поле обязательно для заполнения"),
-});
-
 const WelcomePage = () => {
   const [first_name, setFirst_name] = useState("");
   const [user_id, setUser_id] = useState("");
@@ -38,6 +34,10 @@ const WelcomePage = () => {
     }
   }, [user_id]);
 
+  const validationSchema = Yup.object().shape({
+    inputValue: Yup.string().required("Поле обязательно для заполнения"),
+  });
+
   if (!webApp.initData) {
     return (
       <div>
@@ -57,21 +57,11 @@ const WelcomePage = () => {
   } else {
     return (
       <>
-        <span style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}>
-          Привет {first_name}
-        </span>
+        <span>Привет {first_name}</span>
         {user_from_storage ? (
-          <span
-            style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}
-          >
-            Введите пароль:
-          </span>
+          <span>Введите пароль:</span>
         ) : (
-          <span
-            style={{ color: "white", fontStyle: "italic", fontSize: "2em" }}
-          >
-            Придумайте пароль:
-          </span>
+          <span>Придумайте пароль:</span>
         )}
         <Formik
           initialValues={initialValues}
@@ -83,7 +73,7 @@ const WelcomePage = () => {
             <ErrorMessage
               name="inputValue"
               component="div"
-              style={{ color: "white" }}
+              style={{ color: "white", fontSize: 16, marginBottom: 20 }}
             />
             <button type="submit" className="button">
               OK

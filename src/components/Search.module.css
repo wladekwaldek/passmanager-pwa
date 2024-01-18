@@ -4,18 +4,9 @@
   width: 100%;
   background-color: black;
   position: fixed;
-  top: 10%;
+  top: 0;
   justify-content: space-around;
   align-items: center;
-}
-
-.button {
-  border: none;
-  border-radius: 5px;
-  font-size: 1.3em;
-  padding: 15px;
-  color: white;
-  background-color: inherit;
 }
 
 .field {
@@ -24,7 +15,7 @@
   color: white;
   height: 55%;
   width: 60%;
-  font-size: 1.3em;
+  font-size: 18px;
   outline: none;
   padding: 5px;
 }

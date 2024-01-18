@@ -1,8 +1,11 @@
 .wraper {
-  background-color: purple;
+  background-color: #9f5aed;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: white;
+  font-style: italic;
+  font-size: 2em;
 }
