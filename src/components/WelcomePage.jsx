@@ -82,12 +82,13 @@ const WelcomePage = () => {
         </Formik>
 
         <button
+          style={{ marginTop: 80 }}
           className="button"
           onClick={() => {
             localStorage.clear();
           }}
         >
-          clear
+          ВСЁ Удалить !!!
         </button>
       </>
     );
