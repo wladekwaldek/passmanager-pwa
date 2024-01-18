@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import classes from "./Search.module.css";
 import "./components.css";
 
 export default function Form() {
