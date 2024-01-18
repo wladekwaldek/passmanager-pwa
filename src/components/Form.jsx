@@ -97,7 +97,7 @@ export default function Form() {
   const adElement = () => {
     const duble = list.find((i) => i.title === form.title);
     if (form.title === "") {
-      alert("Введите название");
+      alert("Введите название!");
     } else if (duble) {
       alert("Элемент списка с таким названием уже существует.");
     } else {
