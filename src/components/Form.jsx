@@ -134,22 +134,25 @@ export default function Form() {
       {fields.map((field, index) => (
         <div className="input-container" key={index}>
           <label htmlFor={field.id}>{field.fieldTitle}</label>
-          <input
-            className="input"
-            name={field.id}
-            id={field.id}
-            onChange={changeHandler}
-            value={form[field.id]}
-          />
-          {field.id === "password" && (
-            <div
-              onClick={() => {
-                setForm({ ...form, password: generatePassword(10) });
-              }}
-            >
-              <i className="fa fa-sync" />
-            </div>
-          )}
+          <div className="input-wrap">
+            <textarea
+              maxLength={100}
+              className="input"
+              name={field.id}
+              id={field.id}
+              onChange={changeHandler}
+              value={form[field.id]}
+            />
+            {field.id === "password" && (
+              <div
+                onClick={() => {
+                  setForm({ ...form, password: generatePassword(10) });
+                }}
+              >
+                <i className="fa fa-sync" />
+              </div>
+            )}
+          </div>
         </div>
       ))}
       <button
