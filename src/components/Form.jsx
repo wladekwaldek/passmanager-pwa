@@ -165,18 +165,18 @@ export default function Form() {
             </div>
           </div>
         ))}
+
+        <button
+          className="button"
+          onClick={
+            title.state?.el?.id
+              ? () => editElement(title.state?.el?.id)
+              : adElement
+          }
+        >
+          Готово
+        </button>
       </div>
-      <button
-        style={{ position: "fixed", bottom: 50 }}
-        className="button"
-        onClick={
-          title.state?.el?.id
-            ? () => editElement(title.state?.el?.id)
-            : adElement
-        }
-      >
-        Готово
-      </button>
     </>
   );
 }
