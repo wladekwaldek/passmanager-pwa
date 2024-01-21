@@ -167,6 +167,7 @@ export default function Form() {
         ))}
       </div>
       <button
+        style={{ position: "fixed", bottom: 50 }}
         className="button"
         onClick={
           title.state?.el?.id
