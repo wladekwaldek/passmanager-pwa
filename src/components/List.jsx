@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./components.css";
 import ListElement from "./ListElement";
+
+const webApp = window.Telegram.WebApp;
 
 export default function List() {
   const [list, setList] = useState([]);
@@ -28,29 +30,37 @@ export default function List() {
     }
   };
 
-  useEffect(() => {
-    const listFromLocal = JSON.parse(
-      localStorage.getItem(title.state?.category)
-    );
-    if (listFromLocal) {
-      setList(listFromLocal.data);
-      setFields(listFromLocal.fields);
+  const toBack = (title) => {
+    if (title === "/list") {
+      navigation("/");
+    } else {
+      alert(title);
     }
-    if (query) {
-      const item = list.filter((i) => i.title === query);
-      setList(item);
+  };
+
+  useEffect(() => {
+    webApp.ready();
+    if (webApp.initData) {
+      webApp.BackButton.isVisible = true;
+      webApp.BackButton.onClick(() => toBack(title.pathname));
+      const listFromLocal = JSON.parse(
+        localStorage.getItem(title.state?.category)
+      );
+      if (listFromLocal) {
+        setList(listFromLocal.data);
+        setFields(listFromLocal.fields);
+      }
+      if (query) {
+        const item = list.filter((i) => i.title === query);
+        setList(item);
+      }
+    } else {
+      navigation("/");
     }
   }, [title.state?.category, query]);
 
   return (
     <>
-      <button
-        style={{ position: "absolute", top: 10, left: 10 }}
-        className="button-back"
-        onClick={() => navigation("/")}
-      >
-        <i className="fa fa-arrow-left" />
-      </button>
       <div className="list_container">
         {list.length > 0 ? (
           list.map((el, index) => {

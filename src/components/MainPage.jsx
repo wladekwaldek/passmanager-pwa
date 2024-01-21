@@ -1,8 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import "./components.css";
+import { useEffect } from "react";
+
+const webApp = window.Telegram.WebApp;
 
 const MainPage = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    if (webApp.initData) {
+      webApp.BackButton.isVisible = false;
+    }
+  }, []);
   return (
     <>
       <button

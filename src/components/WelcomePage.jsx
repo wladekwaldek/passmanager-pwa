@@ -28,6 +28,7 @@ const WelcomePage = () => {
   useEffect(() => {
     webApp.ready();
     if (webApp.initData) {
+      webApp.BackButton.isVisible = false;
       setFirst_name(webApp.initDataUnsafe?.user?.first_name);
       setUser_id(webApp.initDataUnsafe?.user?.id.toString());
       setUser_from_storage(localStorage.getItem(user_id));

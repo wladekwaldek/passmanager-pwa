@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./components.css";
+
+const webApp = window.Telegram.WebApp;
 
 export default function Form() {
   const [form, setForm] = useState({});
@@ -9,70 +11,84 @@ export default function Form() {
   const title = useLocation();
   const navigation = useNavigate();
 
-  useEffect(() => {
-    const listFromLocal = JSON.parse(
-      localStorage.getItem(title.state?.category)
-    );
+  const toBack = (title) => {
+    if (title === "/form") {
+      navigation("/list");
+    } else {
+      alert(title);
+    }
+  };
 
-    if (listFromLocal) setList(listFromLocal.data);
-    switch (title.state?.category) {
-      case "email":
-        setFields([
-          { id: "title", fieldTitle: "Название: " },
-          { id: "email", fieldTitle: "Эл. почта: " },
-          { id: "password", fieldTitle: "Пароль: " },
-          { id: "notes", fieldTitle: "Заметки: " },
-        ]);
-        setForm({
-          title: title.state?.el?.title || "",
-          email: title.state?.el?.email || "",
-          password: title.state?.el?.password || "",
-          notes: title.state?.el?.notes || "",
-        });
-        break;
-      case "sites":
-        setFields([
-          { id: "title", fieldTitle: "Название: " },
-          { id: "link", fieldTitle: "Веб-ссылка: " },
-          { id: "login", fieldTitle: "Логин: " },
-          { id: "email", fieldTitle: "Эл. почта: " },
-          { id: "password", fieldTitle: "Пароль: " },
-          { id: "notes", fieldTitle: "Заметки: " },
-        ]);
-        setForm({
-          title: title.state?.el?.title || "",
-          link: title.state?.el?.link || "",
-          login: title.state?.el?.login || "",
-          email: title.state?.el?.email || "",
-          password: title.state?.el?.password || "",
-          notes: title.state?.el?.notes || "",
-        });
-        break;
-      case "networks":
-        setFields([
-          { id: "title", fieldTitle: "Название: " },
-          { id: "login", fieldTitle: "Логин: " },
-          { id: "email", fieldTitle: "Эл. почта: " },
-          { id: "password", fieldTitle: "Пароль: " },
-          { id: "notes", fieldTitle: "Заметки: " },
-        ]);
-        setForm({
-          title: title.state?.el?.title || "",
-          login: title.state?.el?.login || "",
-          email: title.state?.el?.email || "",
-          password: title.state?.el?.password || "",
-          notes: title.state?.el?.notes || "",
-        });
-        break;
-      default:
-        setFields([
-          { id: "title", fieldTitle: "Название: " },
-          { id: "notes", fieldTitle: "Заметки: " },
-        ]);
-        setForm({
-          title: title.state?.el?.title || "",
-          notes: title.state?.el?.notes || "",
-        });
+  useEffect(() => {
+    webApp.ready();
+    if (webApp.initData) {
+      webApp.BackButton.onClick(() => toBack(title.pathname));
+      const listFromLocal = JSON.parse(
+        localStorage.getItem(title.state?.category)
+      );
+
+      if (listFromLocal) setList(listFromLocal.data);
+      switch (title.state?.category) {
+        case "email":
+          setFields([
+            { id: "title", fieldTitle: "Название: " },
+            { id: "email", fieldTitle: "Эл. почта: " },
+            { id: "password", fieldTitle: "Пароль: " },
+            { id: "notes", fieldTitle: "Заметки: " },
+          ]);
+          setForm({
+            title: title.state?.el?.title || "",
+            email: title.state?.el?.email || "",
+            password: title.state?.el?.password || "",
+            notes: title.state?.el?.notes || "",
+          });
+          break;
+        case "sites":
+          setFields([
+            { id: "title", fieldTitle: "Название: " },
+            { id: "link", fieldTitle: "Веб-ссылка: " },
+            { id: "login", fieldTitle: "Логин: " },
+            { id: "email", fieldTitle: "Эл. почта: " },
+            { id: "password", fieldTitle: "Пароль: " },
+            { id: "notes", fieldTitle: "Заметки: " },
+          ]);
+          setForm({
+            title: title.state?.el?.title || "",
+            link: title.state?.el?.link || "",
+            login: title.state?.el?.login || "",
+            email: title.state?.el?.email || "",
+            password: title.state?.el?.password || "",
+            notes: title.state?.el?.notes || "",
+          });
+          break;
+        case "networks":
+          setFields([
+            { id: "title", fieldTitle: "Название: " },
+            { id: "login", fieldTitle: "Логин: " },
+            { id: "email", fieldTitle: "Эл. почта: " },
+            { id: "password", fieldTitle: "Пароль: " },
+            { id: "notes", fieldTitle: "Заметки: " },
+          ]);
+          setForm({
+            title: title.state?.el?.title || "",
+            login: title.state?.el?.login || "",
+            email: title.state?.el?.email || "",
+            password: title.state?.el?.password || "",
+            notes: title.state?.el?.notes || "",
+          });
+          break;
+        default:
+          setFields([
+            { id: "title", fieldTitle: "Название: " },
+            { id: "notes", fieldTitle: "Заметки: " },
+          ]);
+          setForm({
+            title: title.state?.el?.title || "",
+            notes: title.state?.el?.notes || "",
+          });
+      }
+    } else {
+      navigation("/");
     }
   }, [title.state.category, title.state.el]);
 
@@ -124,37 +140,32 @@ export default function Form() {
 
   return (
     <>
-      <button
-        style={{ position: "absolute", top: 10, left: 10 }}
-        className="button-back"
-        onClick={() => navigation(-1)}
-      >
-        <i className="fa fa-arrow-left" />
-      </button>
-      {fields.map((field, index) => (
-        <div className="input-container" key={index}>
-          <label htmlFor={field.id}>{field.fieldTitle}</label>
-          <div className="input-wrap">
-            <textarea
-              maxLength={100}
-              className="input"
-              name={field.id}
-              id={field.id}
-              onChange={changeHandler}
-              value={form[field.id]}
-            />
-            {field.id === "password" && (
-              <div
-                onClick={() => {
-                  setForm({ ...form, password: generatePassword(10) });
-                }}
-              >
-                <i className="fa fa-sync" />
-              </div>
-            )}
+      <div style={{ position: "fixed", top: 0 }}>
+        {fields.map((field, index) => (
+          <div className="input-container" key={index}>
+            <label htmlFor={field.id}>{field.fieldTitle}</label>
+            <div className="input-wrap">
+              <textarea
+                maxLength={100}
+                className="input"
+                name={field.id}
+                id={field.id}
+                onChange={changeHandler}
+                value={form[field.id]}
+              />
+              {field.id === "password" && (
+                <div
+                  onClick={() => {
+                    setForm({ ...form, password: generatePassword(10) });
+                  }}
+                >
+                  <i className="fa fa-sync" />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <button
         className="button"
         onClick={
