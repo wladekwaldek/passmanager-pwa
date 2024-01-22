@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import List from "./List";
 import Form from "./Form";
+import NoFound from "./NoFound";
 
 export default function Navigation() {
   const auth = useContext(AuthContext);
@@ -14,14 +15,12 @@ export default function Navigation() {
         path="/"
         element={auth.isAuthenticated ? <MainPage /> : <WelcomePage />}
       />
-      <Route
-        path="/list/:param?"
-        element={auth.isAuthenticated ? <List /> : <WelcomePage />}
-      />
+      <Route path="/list/:param?" element={<List />} />
       <Route
         path="/form"
         element={auth.isAuthenticated ? <Form /> : <WelcomePage />}
       />
+      <Route element={<NoFound />} />
     </Routes>
   );
 }
