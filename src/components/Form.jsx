@@ -11,9 +11,9 @@ export default function Form() {
   const title = useLocation();
   const navigation = useNavigate();
 
-  const toBack = (title) => {
+  const toBack = (title, state) => {
     if (title === "/form") {
-      navigation("/list", { state: { category: title.state?.category } });
+      navigation("/list", state);
     } else {
       alert(title);
     }
@@ -22,7 +22,9 @@ export default function Form() {
   useEffect(() => {
     webApp.ready();
     if (webApp.initData) {
-      webApp.BackButton.onClick(() => toBack(title.pathname));
+      webApp.BackButton.onClick(() =>
+        toBack(title.pathname, { state: { category: title.state?.category } })
+      );
       const listFromLocal = JSON.parse(
         localStorage.getItem(title.state?.category)
       );
