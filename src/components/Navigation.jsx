@@ -14,8 +14,14 @@ export default function Navigation() {
         path="/"
         element={auth.isAuthenticated ? <MainPage /> : <WelcomePage />}
       />
-      <Route path="/list/:param?" element={<List />} />
-      <Route path="/form" element={<Form />} />
+      <Route
+        path="/list/:param?"
+        element={auth.isAuthenticated ? <List /> : <WelcomePage />}
+      />
+      <Route
+        path="/form"
+        element={auth.isAuthenticated ? <Form /> : <WelcomePage />}
+      />
     </Routes>
   );
 }
