@@ -13,6 +13,7 @@ export default function Form() {
 
   const toBack = (title, state) => {
     if (title === "/form") {
+      console.log(state);
       navigation("/list", state);
     } else {
       alert(title);

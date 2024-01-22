@@ -54,6 +54,7 @@ export default function List() {
         const item = list.filter((i) => i.title === query);
         setList(item);
       }
+      console.log(title.state?.category);
     } else {
       navigation("/");
     }
