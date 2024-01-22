@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./components.css";
 
@@ -13,7 +13,7 @@ export default function Form() {
 
   const toBack = (title) => {
     if (title === "/form") {
-      navigation("/list");
+      navigation("/list", { state: { category: title.state?.category } });
     } else {
       alert(title);
     }
