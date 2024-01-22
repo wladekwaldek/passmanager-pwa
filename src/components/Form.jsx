@@ -140,7 +140,7 @@ export default function Form() {
 
   return (
     <>
-      <div style={{ position: "fixed", top: 0 }}>
+      <div className="list_container">
         {fields.map((field, index) => (
           <div className="input-container" key={index}>
             <label htmlFor={field.id}>{field.fieldTitle}</label>
