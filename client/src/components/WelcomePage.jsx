@@ -11,6 +11,8 @@ const WelcomePage = () => {
   const [user_id, setUser_id] = useState("");
   const [user_from_storage, setUser_from_storage] = useState("");
   const auth = useContext(AuthContext);
+  //const [apiKey, setApiKey] = useState("");
+
   const initialValues = {
     inputValue: "",
   };
