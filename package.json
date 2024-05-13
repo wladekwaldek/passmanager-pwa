@@ -6,7 +6,7 @@
   "scripts": {
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
-    "client": "npm run start --prefix client",
+    "client": "npx run start --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "develop": "nodemon index.js",
@@ -17,7 +17,8 @@
   "dependencies": {
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
-    "ipfs-http-client": "^60.0.1"
+    "ipfs-http-client": "^60.0.1",
+    "node-telegram-bot-api": "^0.65.1"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
