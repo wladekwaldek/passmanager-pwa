@@ -6,7 +6,7 @@
   "scripts": {
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
-    "client": "npx run start --prefix client",
+    "client": "npm run start --prefix client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "develop": "nodemon index.js",
