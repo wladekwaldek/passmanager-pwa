@@ -21,10 +21,18 @@ const WelcomePage = () => {
     localStorage.setItem(user_id, values.inputValue);
     const id = localStorage.getItem(user_id);
     setUser_from_storage(id);
+    // fetch("POST", )
   };
 
   const logIn = (values) => {
     auth.login(values, user_id);
+    // fetch("http://localhost:3000", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json;charset=utf-8",
+    //   },
+    //   body: JSON.stringify({ user: "aaa" }),
+    // });
   };
 
   useEffect(() => {
